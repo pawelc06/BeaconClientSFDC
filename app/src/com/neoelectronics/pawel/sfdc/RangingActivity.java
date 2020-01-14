@@ -70,24 +70,28 @@ public class RangingActivity extends SalesforceActivity implements BeaconConsume
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
                 for (Beacon beacon: beacons) {
-                    if (beacon.getDistance() < 2.0) {
-                        isInRange = true;
-                        Log.d(TAG, "didRangeBeaconsInRegion called with beacon count:  " + beacons.size());
+                    if(beacon.getBluetoothName() != null && beacon.getBluetoothName().equals("iBeaconP")){
+                        if (beacon.getDistance() < 2.0) {
+                            isInRange = true;
+                            Log.d(TAG, "didRangeBeaconsInRegion called with beacon count:  " + beacons.size());
 
-                        //logToDisplay("Beacon " + beacon.toString() + " is about " + beacon.getDistance() + " meters away.");
-                        //logToDisplay("Type code: " + Integer.toHexString(firstBeacon.getBeaconTypeCode()));
-                        //logToDisplay("RSSI: " + beacon.getRssi());
-                        logToDisplay(beacon.getBluetoothName() + " is " + String.format("%.2f", beacon.getDistance())   + " meters away.");
-                        //logToDisplay("Name: " + beacon.getBluetoothName());
-                        //logToDisplay("Tx Power: " + beacon.getTxPower());
+                            logToDisplay("Beacon " + beacon.toString() + " is about " + beacon.getDistance() + " meters away.");
+                            //logToDisplay("Type code: " + Integer.toHexString(firstBeacon.getBeaconTypeCode()));
+                            //logToDisplay("RSSI: " + beacon.getRssi());
+                            logToDisplay(beacon.getBluetoothName() + " is " + String.format("%.2f", beacon.getDistance())   + " meters away.");
+                            //logToDisplay("Name: " + beacon.getBluetoothName());
+                            //logToDisplay("Tx Power: " + beacon.getTxPower());
 
-                        millis = System.currentTimeMillis();
-                        if((millis - lastSentEvent)>60000) {
+                            millis = System.currentTimeMillis();
+                            if((millis - lastSentEvent)>60000) {
 
-                            handleEnteringRange("0030Y000009a01yQAA");
+                                handleEnteringRange("0030Y000009a01yQAA");
+                            }
+                        } else {
+                            logToDisplay("Customer has left the range:"+beacon.getBluetoothName() + " is " + String.format("%.2f", beacon.getDistance())   + " meters away.");
                         }
                     } else {
-                        logToDisplay("Customer has left the range:"+beacon.getBluetoothName() + " is " + String.format("%.2f", beacon.getDistance())   + " meters away.");
+                        logToDisplay("Other :"+beacon.getBluetoothAddress() + " is " + String.format("%.2f", beacon.getDistance())   + " meters away.");
                     }
                 }
             }

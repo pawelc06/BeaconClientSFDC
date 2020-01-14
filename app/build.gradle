@@ -4,6 +4,7 @@ apply plugin: 'com.android.application'
 
 dependencies {
     api project(':libs:SmartSync')
+
     // From node_modules
     implementation 'org.altbeacon:android-beacon-library:2.15.2'
 }
@@ -16,6 +17,7 @@ android {
       debug {
          testCoverageEnabled = true
       }
+
    }
 
   sourceSets {
@@ -38,5 +40,6 @@ android {
   }
   defaultConfig {
     minSdkVersion = 21
+      targetSdkVersion = 27
   }
 }
